@@ -1,0 +1,14 @@
+# NEXXAT - .gitignore standard
+# © NEXXAT - ODET François 2026
+
+*.DS_Store
+node_modules/
+*.log
+*.apk
+*.keystore
+Token_*.txt
+*.zip
+.env
+.env.local
+dist/
+build/

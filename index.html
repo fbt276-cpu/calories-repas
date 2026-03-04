@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     Nom du programme : NEXXAT - Calories Repas (index.html)
+     Auteur           : ODET François
+     Société          : NEXXAT
+     Copyright        : © NEXXAT - ODET François 2026
+     Version          : v1.0.0
+     Date de création : 2026-03-04 12:00:00
+     Langage          : HTML5 / CSS3 / JavaScript ES2022
+     Chemin du fichier: /home/francois/Bureau/DOSSIER/CALORIES REPAS/index.html
+     Sourcé par       : Claude IA
+     ------------------------------------------------------------
+     Historique des versions :
+     v1.0.0 - 2026-03-04 - Création initiale Phase 1 - Profil + Poids + IMC
+     ============================================================ -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0d1a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="NEXXAT - Suivi nutrition, calories et santé">
+  <title>NEXXAT - Calories Repas</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+</head>
+<body>
+
+<!-- ── Splash Screen ──────────────────────────────────────── -->
+<div id="splash">
+  <div class="splash-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="200" height="57" aria-label="NEXXAT">
+      <defs>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+          .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 28px; letter-spacing: 0px; }
+        </style>
+      </defs>
+      <text x="70" y="20" class="logo-text" text-anchor="middle" dominant-baseline="middle">
+        <tspan fill="#ffffff">NEX</tspan><tspan fill="#ff8c00">X</tspan><tspan fill="#ffffff">AT</tspan>
+      </text>
+    </svg>
+  </div>
+  <div class="splash-titre">Calories &amp; Santé</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  <div class="splash-copyright">© NEXXAT - ODET François 2026 · v1.0.0 · Sourcé par Claude IA</div>
+</div>
+
+<!-- ── Application principale ────────────────────────────── -->
+<div id="app">
+
+  <!-- Header -->
+  <header id="header">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="100" height="29" aria-label="NEXXAT">
+      <defs>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+          .logo-h { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 28px; }
+        </style>
+      </defs>
+      <text x="70" y="20" class="logo-h" text-anchor="middle" dominant-baseline="middle">
+        <tspan fill="#ffffff">NEX</tspan><tspan fill="#ff8c00">X</tspan><tspan fill="#ffffff">AT</tspan>
+      </text>
+    </svg>
+    <span class="header-version">v1.0.0 · Phase 1</span>
+  </header>
+
+  <!-- Contenu -->
+  <main id="main-content">
+
+    <!-- ══ PAGE : ACCUEIL ══════════════════════════════════ -->
+    <section id="page-accueil" class="page active">
+
+      <!-- Pas de profil -->
+      <div id="no-profil-msg" class="empty-state" style="display:none">
+        <div class="empty-icone">👤</div>
+        <p>Bienvenue sur <strong>NEXXAT</strong> !<br>
+        Commencez par créer votre profil<br>pour démarrer le suivi.</p>
+        <br>
+        <button class="btn btn-primary btn-sm" onclick="naviguer('profil')">
+          Créer mon profil
+        </button>
+      </div>
+
+      <!-- Stats rapides -->
+      <div id="stats-accueil">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-valeur" id="poids-actuel">—</div>
+            <div class="stat-label">Poids actuel</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-valeur" id="imc-valeur" style="font-size:1.2rem">—</div>
+            <div class="stat-label">IMC</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-valeur" style="font-size:0.95rem" id="calories-jour">—</div>
+            <div class="stat-label">Besoins/jour</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-valeur" style="font-size:1rem" id="tendance-poids">—</div>
+            <div class="stat-label">Tendance</div>
+          </div>
+        </div>
+
+        <!-- Carte IMC détaillée -->
+        <div class="card">
+          <div class="card-titre">⚖️ Indice de Masse Corporelle</div>
+          <div style="text-align:center; margin-bottom:10px;">
+            <span style="font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:700;" id="imc-grand">—</span>
+          </div>
+          <div class="imc-barre-container">
+            <div class="imc-barre">
+              <div class="imc-curseur" id="imc-curseur" style="left:50%"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--nexxat-muted);">
+              <span>16</span><span>18.5</span><span>25</span><span>30</span><span>40+</span>
+            </div>
+          </div>
+          <div style="text-align:center; font-weight:600; font-size:0.95rem;" id="imc-categorie">—</div>
+        </div>
+
+        <!-- Carte objectif -->
+        <div class="card" id="carte-objectif" style="display:none">
+          <div class="card-titre">🎯 Objectif poids</div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:0.8rem; color:var(--nexxat-muted);">Objectif</div>
+              <div style="font-family:'Orbitron',sans-serif; font-size:1.2rem; color:var(--nexxat-succes);" id="objectif-poids">—</div>
+            </div>
+            <div style="font-size:1.5rem">→</div>
+            <div>
+              <div style="font-size:0.8rem; color:var(--nexxat-muted);">Reste</div>
+              <div style="font-family:'Orbitron',sans-serif; font-size:1rem;" id="poids-restant">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saisie rapide poids -->
+        <div class="card">
+          <div class="card-titre">📝 Enregistrer mon poids</div>
+          <form id="form-nouveau-poids" onsubmit="handleNouveauPoids(event)">
+            <div style="display:flex; gap:10px; align-items:flex-end;">
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label>Poids (kg)</label>
+                <input type="number" id="nouveau-poids" step="0.1" min="20" max="300"
+                       placeholder="Ex : 75.5" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm" style="padding:12px 16px; white-space:nowrap;">
+                ✓ Valider
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Graphique poids -->
+        <div class="card">
+          <div class="card-titre">📈 Évolution du poids</div>
+          <canvas id="graphique-poids" width="340" height="160"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PAGE : PROFIL ══════════════════════════════════ -->
+    <section id="page-profil" class="page">
+      <div class="section-titre">👤 Mon Profil</div>
+
+      <div class="card">
+        <div class="profil-avatar" id="profil-avatar">👤</div>
+        <div id="nom-profil" style="text-align:center; font-family:'Orbitron',sans-serif; font-size:1rem; margin-bottom:16px;">
+          Nouveau profil
+        </div>
+
+        <form id="form-profil" onsubmit="handleSauvegardeProfil(event)">
+          <input type="hidden" id="profil-id">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom</label>
+              <input type="text" id="profil-prenom" placeholder="Prénom" required>
+            </div>
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" id="profil-nom" placeholder="Nom" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Sexe</label>
+            <div class="sexe-selector">
+              <button type="button" class="sexe-btn actif" id="btn-sexe-H" onclick="selectionnerSexe('H')">
+                👨 Homme
+              </button>
+              <button type="button" class="sexe-btn" id="btn-sexe-F" onclick="selectionnerSexe('F')">
+                👩 Femme
+              </button>
+            </div>
+            <input type="hidden" id="profil-sexe" value="H">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Âge (ans)</label>
+              <input type="number" id="profil-age" min="10" max="120" placeholder="Ex : 35" required>
+            </div>
+            <div class="form-group">
+              <label>Taille (cm)</label>
+              <input type="number" id="profil-taille" min="100" max="250" placeholder="Ex : 175" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Poids (kg)</label>
+              <input type="number" id="profil-poids" step="0.1" min="20" max="300" placeholder="Ex : 75.5" required>
+            </div>
+            <div class="form-group">
+              <label>Objectif (kg)</label>
+              <input type="number" id="profil-objectifPoids" step="0.1" min="20" max="300" placeholder="Optionnel">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Niveau d'activité physique</label>
+            <select id="profil-niveauActivite">
+              <option value="sedentaire">🪑 Sédentaire (bureau, peu de sport)</option>
+              <option value="leger">🚶 Léger (1-2 fois/semaine)</option>
+              <option value="modere" selected>🏃 Modéré (3-5 fois/semaine)</option>
+              <option value="actif">💪 Actif (6-7 fois/semaine)</option>
+              <option value="tres_actif">🏆 Très actif (sport intensif)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            💾 Sauvegarder le profil
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ══ PAGE : POIDS ════════════════════════════════════ -->
+    <section id="page-poids" class="page">
+      <div class="section-titre">⚖️ Suivi du Poids</div>
+
+      <!-- Saisie nouveau poids -->
+      <div class="card">
+        <div class="card-titre">📝 Nouvelle mesure</div>
+        <form id="form-poids-detail" onsubmit="handleNouveauPoids(event)">
+          <div class="form-group">
+            <label>Poids aujourd'hui (kg)</label>
+            <input type="number" id="nouveau-poids-detail" step="0.1" min="20" max="300"
+                   placeholder="Ex : 75.3" required>
+          </div>
+          <button type="submit" class="btn btn-primary">✓ Enregistrer</button>
+        </form>
+      </div>
+
+      <!-- Graphique détaillé -->
+      <div class="card">
+        <div class="card-titre">📈 Évolution</div>
+        <canvas id="graphique-poids-detail" width="340" height="200"></canvas>
+      </div>
+
+      <!-- Historique -->
+      <div class="card">
+        <div class="card-titre">📋 Historique</div>
+        <div id="liste-historique-poids">
+          <div style="color:var(--nexxat-muted); font-size:0.85rem; text-align:center;">
+            Aucune mesure enregistrée
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Navigation bas -->
+  <nav class="navbar">
+    <button class="nav-item actif" id="nav-accueil" onclick="naviguer('accueil')">
+      <span class="nav-icone">🏠</span>
+      <span>Accueil</span>
+    </button>
+    <button class="nav-item" id="nav-poids" onclick="naviguer('poids')">
+      <span class="nav-icone">⚖️</span>
+      <span>Poids</span>
+    </button>
+    <button class="nav-item" id="nav-profil" onclick="naviguer('profil')">
+      <span class="nav-icone">👤</span>
+      <span>Profil</span>
+    </button>
+  </nav>
+
+</div><!-- /#app -->
+
+<!-- Notifications -->
+<div id="notification-container"></div>
+
+<!-- Scripts -->
+<script src="js/db.js"></script>
+<script src="js/profil.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
