@@ -20,10 +20,10 @@
 :root {
   --nexxat-orange:    #ff8c00;
   --nexxat-orange-dk: #cc7000;
-  --nexxat-bg:        #0a1628;   /* Bleu marine profond */   /* ← était #0d0d1a */
-  --nexxat-bg2:       #0f2044;   /* Bleu marine header/nav */   /* ← était #1a1a2e */
-  --nexxat-bg3:       #132552;   /* Bleu marine stat cards */   /* ← était #16213e */
-  --nexxat-card:      #162860;   /* Bleu marine cards */   /* ← était #1e1e3a */
+  --nexxat-bg:        #1a3a6e;   /* Bleu clair fond principal */
+  --nexxat-bg2:       #1e4080;   /* Bleu clair header/nav */
+  --nexxat-bg3:       #234a94;   /* Bleu clair stat cards */
+  --nexxat-card:      #1c3e7a;   /* Bleu clair cards */
   --nexxat-border:    rgba(255, 140, 0, 0.2);
   --nexxat-text:      #e8e8f0;
   --nexxat-muted:     #8888aa;
@@ -243,7 +243,7 @@ body {
 }
 
 /* ── Canvas ──────────────────────────────────────────────── */
-canvas { width:100%; border-radius:var(--radius); background:var(--nexxat-bg2); }
+canvas { width:100%; border-radius:var(--radius); background:#ffffff; border:1px solid #e0e0e0; }
 
 /* ── Notifications ───────────────────────────────────────── */
 #notification-container { position:fixed; top:60px; left:16px; right:16px; z-index:9000; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
