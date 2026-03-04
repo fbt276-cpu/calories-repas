@@ -4,13 +4,14 @@
 # Auteur           : ODET François
 # Société          : NEXXAT
 # Copyright        : © NEXXAT - ODET François 2026
-# Version          : v1.0.0
-# Date de création : 2026-03-04
+# Version          : v1.1.0
+# Date de création : 2026-03-04 14:00:00
 # Langage          : Bash
 # Chemin du fichier: /home/francois/Bureau/DOSSIER/CALORIES REPAS/scripts/deploy.sh
 # Sourcé par       : Claude IA
 # ------------------------------------------------------------
 # Historique des versions :
+# v1.1.0 - 2026-03-04 - Phase 2 : podometre.js + parametres.js
 # v1.0.0 - 2026-03-04 - Création initiale
 # ============================================================
 
@@ -18,29 +19,22 @@ set -e
 
 echo '╔══════════════════════════════════════════════════╗'
 echo '║       NEXXAT - Calories Repas                    ║'
-echo '║       Script de déploiement automatisé           ║'
-echo '║       © NEXXAT - ODET François 2026 | v1.0.0    ║'
-echo '║       Sourcé par Claude IA                       ║'
+echo '║       Déploiement Phase 2 — v1.1.0               ║'
+echo '║       © NEXXAT - ODET François 2026              ║'
 echo '╚══════════════════════════════════════════════════╝'
 echo ''
 
-# ── Chemins par défaut ─────────────────────────────────────
 PROJET_DEFAUT="/home/francois/Bureau/DOSSIER/CALORIES REPAS"
 TELECHARGEMENTS_DEFAUT="/home/francois/Téléchargements"
 
-echo "📁 Chemin projet par défaut : $PROJET_DEFAUT"
-read -p "   → Appuyez sur Entrée pour confirmer ou saisissez un autre chemin : " PROJET_SAISI
+read -p "📁 Chemin projet [Entrée = défaut] : " PROJET_SAISI
 PROJET="${PROJET_SAISI:-$PROJET_DEFAUT}"
 
-echo ''
-echo "📥 Dossier Téléchargements par défaut : $TELECHARGEMENTS_DEFAUT"
-read -p "   → Appuyez sur Entrée pour confirmer ou saisissez un autre chemin : " TELE_SAISI
+read -p "📥 Téléchargements [Entrée = défaut] : " TELE_SAISI
 TELECHARGEMENTS="${TELE_SAISI:-$TELECHARGEMENTS_DEFAUT}"
 
 echo ''
-echo "📂 Création de l'arborescence du projet..."
-
-# ── Création des dossiers ──────────────────────────────────
+echo '📂 Création de la structure...'
 mkdir -p "$PROJET/assets/css"
 mkdir -p "$PROJET/assets/icons"
 mkdir -p "$PROJET/js"
@@ -48,52 +42,58 @@ mkdir -p "$PROJET/Documentation"
 mkdir -p "$PROJET/scripts"
 mkdir -p "$PROJET/.well-known"
 
-echo '✅ Structure créée.'
-echo ''
-echo '📦 Déplacement des fichiers depuis Téléchargements...'
+echo '📦 Déplacement des fichiers (mv — sans doublon)...'
 
-# ── Déplacement des fichiers (mv = pas de doublon) ─────────
 move_if_exists() {
   local src="$TELECHARGEMENTS/$1"
   local dst="$2"
   if [ -f "$src" ]; then
-    mv "$src" "$dst"
-    echo "  ✓ $1 → $dst"
+    mv "$src" "$dst" && echo "  ✓ $1"
   else
-    echo "  ⚠️  $1 non trouvé dans Téléchargements (ignoré)"
+    echo "  ⚠️  $1 non trouvé (ignoré)"
   fi
 }
 
-move_if_exists "index.html"     "$PROJET/index.html"
-move_if_exists "manifest.json"  "$PROJET/manifest.json"
-move_if_exists "sw.js"          "$PROJET/sw.js"
-move_if_exists "README.md"      "$PROJET/README.md"
-move_if_exists ".gitignore"     "$PROJET/.gitignore"
-move_if_exists "style.css"      "$PROJET/assets/css/style.css"
-move_if_exists "app.js"         "$PROJET/js/app.js"
-move_if_exists "db.js"          "$PROJET/js/db.js"
-move_if_exists "profil.js"      "$PROJET/js/profil.js"
-move_if_exists "deploy.sh"      "$PROJET/scripts/deploy.sh"
+# Fichiers racine
+move_if_exists "index.html"    "$PROJET/index.html"
+move_if_exists "manifest.json" "$PROJET/manifest.json"
+move_if_exists "sw.js"         "$PROJET/sw.js"
+move_if_exists "README.md"     "$PROJET/README.md"
+move_if_exists ".gitignore"    "$PROJET/.gitignore"
+
+# CSS
+move_if_exists "style.css"     "$PROJET/assets/css/style.css"
+
+# JS
+move_if_exists "app.js"        "$PROJET/js/app.js"
+move_if_exists "db.js"         "$PROJET/js/db.js"
+move_if_exists "profil.js"     "$PROJET/js/profil.js"
+move_if_exists "podometre.js"  "$PROJET/js/podometre.js"
+move_if_exists "parametres.js" "$PROJET/js/parametres.js"
+
+# Script
+move_if_exists "deploy.sh"     "$PROJET/scripts/deploy.sh"
+
+chmod +x "$PROJET/scripts/deploy.sh"
+mkdir -p ~/NEXXAT_SECURITE
 
 echo ''
-echo '🔐 Configuration des permissions...'
-chmod +x "$PROJET/scripts/deploy.sh"
-
-# ── Sécurité keystore ──────────────────────────────────────
-mkdir -p ~/NEXXAT_SECURITE
-echo '🔒 Dossier ~/NEXXAT_SECURITE/ prêt pour le keystore Android.'
+echo '🚀 Publication sur GitHub...'
+cd "$PROJET"
+git add .
+git commit -m "NEXXAT - Calories Repas v1.1.0 - Phase 2 - Podomètre + Paramètres + Date naissance + Thème doux" || echo "  (rien à valider)"
+git push origin master
 
 echo ''
 echo '════════════════════════════════════════════════════'
-echo '✅ Déploiement Phase 1 terminé !'
+echo '✅ Phase 2 déployée !'
 echo ''
-echo "📁 Projet    : $PROJET"
-echo '🌐 GitHub    : https://fbt276-cpu.github.io/calories-repas/'
-echo '📦 Package   : com.nexxat.caloriesrepas'
+echo "🌐 PWA : https://fbt276-cpu.github.io/calories-repas/"
 echo ''
-echo '📋 Prochaines étapes :'
-echo '   1. Ouvrez index.html dans Chrome Android pour tester'
-echo '   2. Vérifiez le splash screen NEXXAT (2 secondes)'
-echo '   3. Créez votre profil'
-echo '   4. Dites "OK validé" pour passer à la Phase 2'
+echo '✨ Nouveautés Phase 2 :'
+echo '   👟 Podomètre automatique (accéléromètre Android)'
+echo '   📅 Date de naissance → âge calculé automatiquement'
+echo '   🎂 Message anniversaire automatique'
+echo '   ⚙️  Page Paramètres (langue, unités, objectif pas)'
+echo '   🎨 Thème plus doux (fond bleu ardoise)'
 echo '════════════════════════════════════════════════════'
