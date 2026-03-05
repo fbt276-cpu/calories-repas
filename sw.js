@@ -3,20 +3,20 @@
 // Auteur           : ODET François
 // Société          : NEXXAT
 // Copyright        : © NEXXAT - ODET François 2026
-// Version          : v1.1.0
+// Version          : v1.3.0
 // Date de création : 2026-03-04 14:00:00
 // Langage          : JavaScript ES2022 (Service Worker)
 // Chemin du fichier: /home/francois/Bureau/DOSSIER/CALORIES REPAS/sw.js
 // Sourcé par       : Claude IA
 // ------------------------------------------------------------
 // Historique des versions :
-// v1.1.0 - 2026-03-04 - Phase 2 : ajout podometre.js + parametres.js
-// v1.0.0 - 2026-03-04 - Création initiale
+// v1.3.0 - 2026-03-04 - Phase 4 : Hydratation + fix cache
+// v1.1.0 - Phase 2 | v1.0.0 - Création initiale
 // ============================================================
 
 'use strict';
 
-const CACHE_NAME = 'calories-repas-nexxat-v1.2.0';
+const CACHE_NAME = 'calories-repas-nexxat-v1.3.0';
 
 const ASSETS_A_CACHER = [
   './',
@@ -30,12 +30,13 @@ const ASSETS_A_CACHER = [
   './js/profil.js',
   './js/podometre.js',
   './js/nutrition.js',
+  './js/hydratation.js',
   './js/parametres.js',
   'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap'
 ];
 
 self.addEventListener('install', (e) => {
-  console.log('[NEXXAT SW] Installation v1.1.0');
+  console.log('[NEXXAT SW] Installation v1.3.0');
   e.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(ASSETS_A_CACHER))

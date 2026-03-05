@@ -3,14 +3,14 @@
 // Auteur           : ODET François
 // Société          : NEXXAT
 // Copyright        : © NEXXAT - ODET François 2026
-// Version          : v1.2.0
+// Version          : v1.3.0
 // Date de création : 2026-03-04 14:00:00
 // Langage          : JavaScript ES2022
 // Chemin du fichier: /home/francois/Bureau/DOSSIER/CALORIES REPAS/js/app.js
 // Sourcé par       : Claude IA
 // ------------------------------------------------------------
 // Historique des versions :
-// v1.2.0 - 2026-03-04 - Phase 2 : Podomètre + Paramètres + Date naissance + Thème doux
+// v1.3.0 - 2026-03-04 - Phase 2 : Podomètre + Paramètres + Date naissance + Thème doux
 // v1.0.0 - 2026-03-04 - Création initiale
 // ============================================================
 
@@ -18,7 +18,7 @@
 
 console.log('╔══════════════════════════════════════════════════╗');
 console.log('║       NEXXAT - Calories Repas                    ║');
-console.log('║       © NEXXAT - ODET François 2026 | v1.2.0    ║');
+console.log('║       © NEXXAT - ODET François 2026 | v1.3.0    ║');
 console.log('║       Sourcé par Claude IA                       ║');
 console.log('╚══════════════════════════════════════════════════╝');
 
@@ -56,6 +56,9 @@ function naviguer(page) {
       break;
     case 'profil':
       remplirFormulaireProfil();
+      break;
+    case 'hydratation':
+      rafraichirHydratation();
       break;
     case 'parametres':
       remplirFormulaireParametres();
@@ -229,6 +232,9 @@ async function init() {
     // Initialiser nutrition
     await initNutrition();
 
+    // Initialiser hydratation
+    await initHydratation();
+
     // Splash 2 secondes
     setTimeout(() => {
       document.getElementById('splash')?.classList.add('hidden');
@@ -240,7 +246,7 @@ async function init() {
     // Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('[NEXXAT] Service Worker v1.2.0 enregistré.'))
+        .then(() => console.log('[NEXXAT] Service Worker v1.3.0 enregistré.'))
         .catch(e => console.warn('[NEXXAT] SW :', e));
     }
 

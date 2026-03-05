@@ -20,6 +20,7 @@ const PARAMETRES_DEFAUT = {
   langue:      'fr',
   unites:      'metric',   // metric (kg/cm) ou imperial (lbs/in)
   objectifPas: 10000,
+  objectifEau: 1500,
   version:     '1.1.0'
 };
 
@@ -49,6 +50,7 @@ function sauvegarderParametres(params) {
 function appliquerParametres(params) {
   // Objectif pas
   if (PODOMETRE) PODOMETRE.objectif = params.objectifPas || 10000;
+  if (HYDRATATION) HYDRATATION.objectif = params.objectifEau || 1500;
   mettreAJourAffichagePas();
 }
 

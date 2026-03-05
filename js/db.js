@@ -3,13 +3,14 @@
 // Auteur           : ODET François
 // Société          : NEXXAT
 // Copyright        : © NEXXAT - ODET François 2026
-// Version          : v1.1.0
+// Version          : v1.3.0
 // Date de création : 2026-03-04 14:00:00
 // Langage          : JavaScript ES2022
 // Chemin du fichier: /home/francois/Bureau/DOSSIER/CALORIES REPAS/js/db.js
 // Sourcé par       : Claude IA
 // ------------------------------------------------------------
 // Historique des versions :
+// v1.3.0 - 2026-03-04 - Ajout store hydratation
 // v1.1.0 - 2026-03-04 - Ajout store activites (podomètre)
 // v1.0.0 - 2026-03-04 - Création initiale - Gestion IndexedDB
 // ============================================================
@@ -18,13 +19,14 @@
 
 const NEXXAT_DB = {
   name:    'nexxat_calories_repas',
-  version: 2,           // ← incrémenté pour migration
+  version: 3,           // ← incrémenté pour migration
   stores: {
     profils:   'profils',
     poids:     'poids',
     repas:     'repas',
     aliments:  'aliments',
     activites: 'activites',
+    hydratation: 'hydratation',
   }
 };
 
@@ -63,6 +65,13 @@ function initDB() {
       if (!database.objectStoreNames.contains('aliments')) {
         const s = database.createObjectStore('aliments', { keyPath: 'id', autoIncrement: true });
         s.createIndex('nom', 'nom', { unique: false });
+      }
+
+      // ── Store hydratation (v1.3.0) ──────────────────────
+      if (!database.objectStoreNames.contains('hydratation')) {
+        const s = database.createObjectStore('hydratation', { keyPath: 'id', autoIncrement: true });
+        s.createIndex('profilId', 'profilId', { unique: false });
+        s.createIndex('dateJour', 'dateJour', { unique: false });
       }
 
       // ── Store activites (v1.1.0) ────────────────────────

@@ -303,3 +303,77 @@ select option { background:var(--nexxat-bg2); color:var(--nexxat-text); }
 
 details summary { list-style: none; }
 details summary::-webkit-details-marker { display: none; }
+
+/* ── Hydratation Phase 4 ─────────────────────────────────── */
+.hydra-cercle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 20px;
+  position: relative;
+  width: 160px; height: 160px;
+}
+.hydra-cercle-svg {
+  transform: rotate(-90deg);
+}
+.hydra-cercle-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.1);
+  stroke-width: 10;
+}
+#cercle-hydra-progress {
+  fill: none;
+  stroke: #3498db;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 339.3;
+  stroke-dashoffset: 339.3;
+  transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease;
+}
+.hydra-cercle-texte {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.hydra-total-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: #3498db; line-height: 1;
+}
+.hydra-total-label {
+  font-size: 0.65rem; color: var(--nexxat-muted);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+.boutons-express {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.btn-express {
+  padding: 14px 10px;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  border-radius: var(--radius);
+  background: rgba(52, 152, 219, 0.08);
+  color: var(--nexxat-text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; text-align: center;
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-express:hover, .btn-express:active {
+  background: rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  transform: scale(0.97);
+}
+.btn-express .express-ml {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  color: #3498db;
+  margin-top: 2px;
+}
